@@ -25,6 +25,8 @@ sed -i "/#nova funcio/i\\
 \t\t\"\$DIR_$NOU_NOM_UPPER/$NOU_NOM\" \$Arguments\\
 \t\t;;
 " ../system/jsbach_cli
+sed -i "s/]\"#nou_comand/ $NOU_NOM ]\"#nou_comand/" ../system/jsbach_cli
+
 
 #Afegir a variables
 sed -i "/#nou dir/i\\

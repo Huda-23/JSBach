@@ -1,10 +1,9 @@
 #!/bin/bash
 
 source /usr/local/JSBach/scripts/utils/variables.conf
-	"wan")
-		"$DIR_WAN/wan" $Arguments
-		;;
-MSG="[ #nova funcio  ]"
+	
+
+MSG="[ wan ]"#nou_comand
 MSG_ERROR="Error: opcio desconeguda falta $MSG"
 
 read ordre
