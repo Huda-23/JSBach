@@ -1,0 +1,31 @@
+#!/bin/bash
+
+source /usr/local/JSBach/scripts/utils/variables.conf
+	"wan")
+		"$DIR_WAN/wan" $Arguments
+		;;
+MSG="[ #nova funcio  ]"
+MSG_ERROR="Error: opcio desconeguda falta $MSG"
+
+read ordre
+if [[ -n $ordre ]]; then
+	Comando=$(echo $ordre | awk '{print $1}')
+	Arguments=$(echo $ordre | awk '{for (i=2; i<=NF; ++i)  printf $i " " }')
+
+	case "$Comando" in
+	"prompt")
+		echo "$PROMPT""_v""$VERSIO"
+		;;
+	"wan")
+		"$DIR_WAN/wan" $Arguments
+		;;
+	#nova funcio
+	"help")
+		echo "$MSG"
+		;;
+	*)
+		echo "$MSG_ERROR"
+		;;
+	esac
+fi
+

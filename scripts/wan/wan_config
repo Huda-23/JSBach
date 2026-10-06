@@ -1,0 +1,44 @@
+#!/bin/bash
+
+######################################################################
+###  Configurar Guardar
+######################################################################
+
+fnc_wan_config_guardar_dhcp() {
+	echo fnc_wan_config_guardar_dhcp
+
+	MSG="Error: opcio desconeguda falta nom de la interfaç"
+
+	# Comprovem que hi hagi almenys un argument
+	if [ $# -lt 1 ]; then
+		echo "$MSG"
+		exit 1
+	fi
+
+	WAN_INT=$1
+	shift
+	 
+	if grep -q '^WAN_INT=' "$DIR_WAN/wan.conf" 2>/dev/null; then
+    		sed -i "s/^WAN_INT=.*/WAN_INT=$WAN_INT/" "$DIR_WAN/wan.conf"
+	else
+    		echo "WAN_INT=$WAN_INT" >> "$DIR_WAN/wan.conf" 
+    	fi
+	 
+	
+}
+
+fnc_wan_config_guardar_manual() {
+	echo fnc_wan_config_guardar_manual
+}
+
+######################################################################
+###  Configurar Mostrar
+######################################################################
+
+fnc_wan_config_mostrar_opcio1() {
+	echo fnc_wan_config_mostrar_opcio1
+}
+
+fnc_wan_config_mostrar_opcio2() {
+	echo fnc_wan_config_mostrar_opcio2
+}
