@@ -91,7 +91,7 @@ fnc_wan_config_mostrar() {
 		fnc_wan_config_mostrar_opcio2 $@
 		;;
 	*)
-		echo "$MSG"
+		echo "$MSG"fnc_wan_configurar
 		;;
 	esac
 }

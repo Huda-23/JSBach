@@ -18,17 +18,36 @@ fnc_wan_config_guardar_dhcp() {
 	WAN_INT=$1
 	shift
 	 
-	if grep -q '^WAN_INT=' "$DIR_WAN/wan.conf" 2>/dev/null; then
-    		sed -i "s/^WAN_INT=.*/WAN_INT=$WAN_INT/" "$DIR_WAN/wan.conf"
-	else
-    		echo "WAN_INT=$WAN_INT" >> "$DIR_WAN/wan.conf" 
-    	fi
-	 
+	(
+		echo "WAN_MODE=dhcp"
+		echo "WAN_INT=$WAN_INT"
+	) > "$DIR_WAN/wan.conf"
 	
 }
 
 fnc_wan_config_guardar_manual() {
 	echo fnc_wan_config_guardar_manual
+	
+	MSG="Error: opcio desconeguda falta int ip/masc p.e dns"
+
+	# Comprovem que hi hagi almenys un argument
+	if [ $# -lt 4 ]; then
+		echo "$MSG"
+		exit 1
+	fi
+
+	WAN_INT=$1
+	WAN_IP_MASC=$2
+	WAN_PE=$3
+	WAN_DNS=$4
+	 
+	(
+		echo "WAN_MODE=manual"
+		echo "WAN_INT=$WAN_INT"
+		echo "WAN_IP_MASC=$WAN_IP_MASC"
+		echo "WAN_PE=$WAN_PE"
+		echo "WAN_DNS=$WAN_DNS"
+	) > "$DIR_WAN/wan.conf"
 }
 
 ######################################################################
