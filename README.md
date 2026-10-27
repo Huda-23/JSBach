@@ -1,4 +1,5 @@
 # 2027-27_JSBACH
 curs 2026 2027 BAST
 
-**David Castillo Durá**
+> [!NOTE]
+> **David Castillo Durá**
