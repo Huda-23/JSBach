@@ -1,0 +1,13 @@
+#!/bin/bash
+
+fnc_enrutar_aturar() {
+	echo fnc_enrutar_aturar
+
+	iptables -t nat -D POSTROUTING -o "$WAN_INT" -j MASQUERADE
+
+    sysctl -w net.ipv4.ip_forward=0
+
+	ip a d "$LAN_IP" dev "$LAN_INT"
+	ip l s dev "$LAN_INT" down
+
+}

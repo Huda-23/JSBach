@@ -1,0 +1,39 @@
+#!/bin/bash
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "$SCRIPT_DIR/../utils/variables.conf"
+
+######################################################################
+###  MAIN
+######################################################################
+
+source "$DIR_ENRUTAR/enrutar.conf"
+
+MSG="Error: opción desconocida. Indicar [ iniciar | aturar | estat ]"
+
+# Comprovem que hi hagi almenys un argument
+if [ $# -lt 1 ]; then
+	echo "$MSG"
+	exit 1
+fi
+
+OPCIO_1=$1
+shift
+
+case "$OPCIO_1" in
+iniciar)
+	source "$DIR_ENRUTAR/enrutar_iniciar"
+	fnc_enrutar_iniciar $@
+	;;
+aturar)
+	source "$DIR_ENRUTAR/enrutar_aturar"
+	fnc_enrutar_aturar $@
+	;;
+estat)
+	source "$DIR_ENRUTAR/enrutar_estat"
+	fnc_enrutar_estat $@
+	;;
+*)
+	echo "$MSG"
+	;;
+esac

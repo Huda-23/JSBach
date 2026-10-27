@@ -1,0 +1,14 @@
+#!/bin/bash
+
+fnc_enrutar_estat() {
+	# echo fnc_enrutar_estat
+
+	if sysctl -n net.ipv4.ip_forward | grep -q '^1$' && \
+	   iptables -t nat -C POSTROUTING -o np1s0 -j MASQUERADE 2>/dev/null; then
+
+	   echo "$ACTIVAT"
+	else
+	  echo "$DESACTIVAT"
+	fi
+
+}

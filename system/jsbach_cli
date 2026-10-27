@@ -3,7 +3,7 @@
 source /usr/local/JSBach/scripts/utils/variables.conf
 	
 
-MSG="[ wan ]"#nou_comand
+MSG="[ wan ]" # nou_comand
 MSG_ERROR="Error: opcio desconeguda falta $MSG"
 
 read ordre
