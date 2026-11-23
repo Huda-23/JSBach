@@ -9,7 +9,7 @@ source "$SCRIPT_DIR/../utils/variables.conf"
 
 fnc_wan_configurar() {
 
-	echo fnc_wan_configurar
+	#echo fnc_wan_configurar
 	MSG="Error: opción desconocida. Indicar [ guardar | mostrar ]"
 
 	# Comprovem que hi hagi almenys un argument
@@ -39,7 +39,7 @@ fnc_wan_configurar() {
 ######################################################################
 
 fnc_wan_config_guardar() {
-	echo fnc_wan_config_guardar
+	#echo fnc_wan_config_guardar
 	MSG="Error: opcio desconeguda falta [ dhcp | manual ]"
 
 	# Comprovem que hi hagi almenys un argument
@@ -92,7 +92,7 @@ fnc_wan_config_mostrar() {
 		fnc_wan_config_mostrar_interfaces $@
 		;;
 	*)
-		echo "$MSG"fnc_wan_configurar
+		echo "$MSG"
 		;;
 	esac
 }

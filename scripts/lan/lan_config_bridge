@@ -1,0 +1,69 @@
+#!/bin/bash
+
+
+fnc_lan_config_bridge_guardar() {
+	echo fnc_lan_config_bridge_guardar
+	
+	MSG="Err: son 3 argumentos: interfaz, untag, tag"
+	if [ $# -lt 3 ]; then
+		echo "$MSG"
+		exit 1
+	fi
+	
+	interf=$1
+	vlan_untag=$2
+	vlan_tag=$3
+	
+	sqlite3 "$DIR_BD/$BD" "
+	PRAGMA foreign_keys=ON;
+	
+	INSERT OR IGNORE INTO bridge ports (interf, vlan.untag, vlan.tag) 
+	VALUES ('$interf', '$vlan_untag', '$vlan_tag');
+	"
+}
+
+fnc_lan_config_bridge_esborrar() {
+	echo fnc_lan_config_bridge_esborrar
+	
+	MSG="Err: es 1 argumento vid"
+	if [ $# -lt 1 ]; then
+		echo "$MSG"
+		exit 1
+	fi
+	
+	sqlite3 "$DIR_BD/$BD" "
+	PRAGMA foreign_keys = ON;
+	
+	DELETE FROM bridge_ports
+	WHERE interface = '$1';
+	"
+}
+
+
+fnc_lan_config_bridge_modificar() {
+	echo fnc_lan_config_bridge_modificar
+	
+	
+	MSG="Err: son 3 argumentos vid nom ip_xarxa ip_gateway"
+	
+	if [ $# -lt 3 ]; then
+		echo "$MSG"
+		exit 1
+	fi
+	
+	vid=$1
+	vlan_untag=$2
+	vlan_tag=$3
+	
+	sqlite3 "$DIR_BD/$BD" "
+	PRAGMA foreign_keys=ON;
+	
+	UPDATE bridge_ports
+	SET vlan_untag='$vlan_untag', vlan_tag='$vlan_tag'
+	WHERE interface = '$interface';
+	"
+}
+
+fnc_lan_config_bridge_mostrar() {
+	echo fnc_lan_config_bridge_mostrar
+}

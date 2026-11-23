@@ -19,6 +19,6 @@ fnc_enrutar_iniciar() {
 	iptables -t nat -A POSTROUTING -o $WAN_INT -j MASQUERADE
 
 	echo "Enrutamiento iniciado."
-
+	
 }
-
+e

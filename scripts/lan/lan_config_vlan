@@ -1,0 +1,95 @@
+#!/bin/bash
+
+######################################################################
+###  Configurar Guardar
+######################################################################
+
+fnc_lan_config_vlan_guardar() {
+	echo fnc_lan_config_vlan_guardar
+	
+	MSG="Err: son 4 argumentos vid nom ip_xarxa ip_gateway"
+	if [ $# -lt 4 ]; then
+		echo "$MSG"
+		exit 1
+	fi
+	
+	vid=$1
+	nom=$2
+	ip_xarxa=$3
+	ip_gateway=$4
+	
+	sqlite3 "$DIR_BD/$BD" "
+	PRAGMA foreign_keys=ON;
+	
+	INSERT OR IGNORE INTO lan (ip_xarxa, ip_gateway, if_lan) 
+	VALUES ('$ip_xarxa', '$ip_gateway', 'br0.$vid');
+
+	INSERT OR IGNORE INTO vlan (vid, nom, lan_id)
+	SELECT $vid, '$nom', id
+	FROM lan
+	WHERE ip_xarxa='$ip_xarxa';
+	"
+}
+
+fnc_lan_config_vlan_esborrar() {
+	echo fnc_lan_config_vlan_esborrar
+	
+	MSG="Err: es 1 argumento vid"
+	if [ $# -lt 1 ]; then
+		echo "$MSG"
+		exit 1
+	fi
+	
+	sqlite3 "$DIR_BD/$BD" "
+	PRAGMA foreign_keys = ON;
+	
+	DELETE FROM lan
+	WHERE id = (
+		SELECT lan_id
+		FROM vlan
+		WHERE vid = '$1'
+	);
+	"
+}
+
+fnc_lan_config_vlan_modificar() {
+	echo fnc_lan_config_vlan_modificar
+	
+	MSG="Err: son 4 argumentos vid nom ip_xarxa ip_gateway"
+	if [ $# -lt 4 ]; then
+		echo "$MSG"
+		exit 1
+	fi
+	
+	vid=$1
+	nom=$2
+	ip_xarxa=$3
+	ip_gateway=$4
+	
+	sqlite3 "$DIR_BD/$BD" "
+	PRAGMA foreign_keys=ON;
+	
+	UPDATE lan
+	SET ip_xarxa='$ip_xarxa', ip_gateway='$ip_gateway'
+	WHERE id = (
+		SELECT lan_id
+		FROM vlan
+		WHERE vid='$vid'
+	);
+
+	UPDATE vlan
+	SET nom='$nom'
+	WHERE vid='$vid';
+	"
+}
+
+fnc_lan_config_vlan_mostrar() {
+	echo fnc_lan_config_vlan_mostrar
+	
+	sqlite3 -header -column "$DIR_BD/$BD" "
+	SELECT vlan.vlanid, vlan.nom, lan.ip_xarxa, lan.ip_gateway, lan.if_lan
+	FROM vlan
+	JOIN lan ON vlan.lan_id = lan.id;
+	"
+}
+
